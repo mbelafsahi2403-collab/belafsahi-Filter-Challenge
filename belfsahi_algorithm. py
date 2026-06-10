@@ -1,0 +1,31 @@
+import time
+
+def get_belfsahi_structure(n):
+    rem = n % 9
+    if rem == 1 or rem == 4 or rem == 7:
+        return 'A'
+    elif rem == 2 or rem == 5 or rem == 8:
+        return 'B'
+    else:
+        return 'C'
+
+def belfsahi_matrix_filter(x, y):
+    struct_x = get_belfsahi_structure(x)
+    struct_x3 = 1 if struct_x == 'A' else (8 if struct_x == 'B' else 0)
+    rem_y2 = (y**2) % 9  
+    det_structure_rem = (struct_x3 * rem_y2) % 9
+    return (det_structure_rem in)
+
+print("=== BELFSAHI FILTER START ===")
+eliminated = 0
+total = 0
+
+for x in range(1, 500):
+    for y in range(1, 500):
+        total += 1
+        if not belfsahi_matrix_filter(x, y):
+            eliminated += 1
+
+print(f"Total Tested: {total:,}")
+print(f"Eliminated by Filter: {eliminated:,}")
+print(f"Reduction Rate: {(eliminated / total) * 100:.2f}%")
